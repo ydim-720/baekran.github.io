@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>司軒 白蘭 — 낙화전의 주귀</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FAFAF8;
+    --cream: #F5F0E8;
+    --gold: #C9A84C;
+    --gold-light: #E8D49A;
+    --gold-dark: #8B6914;
+    --crimson: #8B1A1A;
+    --crimson-light: #B22222;
+    --crimson-soft: rgba(139, 26, 26, 0.08);
+    --ink: #1A1A1A;
+    --ink-light: #3A3A3A;
+    --ink-faint: #6A6A6A;
+    --smoke: rgba(26, 26, 26, 0.03);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Noto Serif KR', serif;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── Smoke Particles ── */
+  .smoke-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .smoke {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+    animation: smoke-drift 20s infinite ease-in-out;
+    filter: blur(40px);
+  }
+
+  .smoke:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 25s; }
+  .smoke:nth-child(2) { left: 70%; top: 40%; animation-delay: -5s; animation-duration: 30s; width: 300px; height: 300px; }
+  .smoke:nth-child(3) { left: 40%; top: 60%; animation-delay: -10s; animation-duration: 22s; }
+  .smoke:nth-child(4) { left: 80%; top: 10%; animation-delay: -15s; animation-duration: 28s; width: 150px; height: 150px; }
+
+  @keyframes smoke-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    25% { transform: translate(30px, -40px) scale(1.2); opacity: 0.8; }
+    50% { transform: translate(-20px, -80px) scale(0.9); opacity: 0.3; }
+    75% { transform: translate(40px, -30px) scale(1.1); opacity: 0.7; }
+  }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+    z-index: 1;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 30%, rgba(139,26,26,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-decoration {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-bottom: 40px;
+    animation: fadeSlideUp 1.2s ease-out 0.2s both;
+  }
+
+  .hero-hanja {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    color: var(--crimson);
+    letter-spacing: 0.3em;
+    line-height: 1.2;
+    animation: fadeSlideUp 1.2s ease-out 0.4s both;
+    text-shadow: 0 2px 30px rgba(139,26,26,0.1);
+  }
+
+  .hero-name {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    color: var(--ink-faint);
+    letter-spacing: 0.8em;
+    margin-top: 16px;
+    animation: fadeSlideUp 1.2s ease-out 0.6s both;
+  }
+
+  .hero-alias {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    margin-top: 28px;
+    animation: fadeSlideUp 1.2s ease-out 0.8s both;
+  }
+
+  .hero-tagline {
+    max-width: 500px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--ink-faint);
+    line-height: 2;
+    margin-top: 40px;
+    animation: fadeSlideUp 1.2s ease-out 1s both;
+  }
+
+  .hero-decoration-bottom {
+    width: 60px;
+    height: 60px;
+    margin-top: 50px;
+    animation: fadeSlideUp 1.2s ease-out 1.2s both;
+  }
+
+  .hero-decoration-bottom svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 48px;
+    animation: fadeSlideUp 1.2s ease-out 1.5s both;
+  }
+
+  .scroll-indicator span {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    font-weight: 300;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 30px;
+    background: var(--gold);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* ── Content Layout ── */
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+  }
+
+  /* ── Section Block ── */
+  .section {
+    margin-bottom: 100px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: var(--crimson);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .section-divider {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    margin: 20px 0 28px;
+  }
+
+  .section-text {
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: var(--ink-light);
+    line-height: 2.2;
+  }
+
+  .section-text em {
+    font-style: normal;
+    color: var(--crimson);
+    font-weight: 400;
+  }
+
+  .section-text strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ── Stat Grid ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    margin-top: 28px;
+  }
+
+  .stat-item {
+    padding: 24px;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: linear-gradient(135deg, var(--white) 0%, rgba(201,168,76,0.03) 100%);
+    position: relative;
+  }
+
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--crimson), var(--gold));
+  }
+
+  .stat-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .stat-value small {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--ink-faint);
+    margin-top: 2px;
+  }
+
+  /* ── Quote Block ── */
+  .quote-block {
+    position: relative;
+    margin: 60px 0;
+    padding: 40px 36px;
+    background: linear-gradient(135deg, var(--crimson-soft), rgba(201,168,76,0.04));
+    border-left: 3px solid var(--crimson);
+  }
+
+  .quote-block::before {
+    content: '"';
+    position: absolute;
+    top: -10px; left: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    color: rgba(139,26,26,0.1);
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--ink-light);
+    line-height: 2.2;
+    font-style: italic;
+  }
+
+  .quote-attribution {
+    font-size: 0.75rem;
+    color: var(--gold-dark);
+    margin-top: 16px;
+    letter-spacing: 0.2em;
+  }
+
+  /* ── Trait Tags ── */
+  .trait-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .trait-tag {
+    padding: 8px 20px;
+    border: 1px solid rgba(201,168,76,0.3);
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+    background: rgba(201,168,76,0.04);
+    transition: all 0.3s ease;
+  }
+
+  .trait-tag:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+    background: var(--crimson-soft);
+  }
+
+  /* ── Relationship ── */
+  .relationship-card {
+    padding: 32px;
+    border: 1px solid rgba(201,168,76,0.15);
+    background: linear-gradient(180deg, var(--white), rgba(245,240,232,0.5));
+    margin-top: 24px;
+  }
+
+  .relationship-card .rel-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .relationship-card .rel-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--crimson);
+    margin: 6px 0 12px;
+  }
+
+  .relationship-card .rel-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ink-light);
+    line-height: 2;
+  }
+
+  /* ── Horizontal Divider ── */
+  .divider-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 80px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .divider-ornament.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .divider-ornament .line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light));
+  }
+
+  .divider-ornament .line:last-child {
+    background: linear-gradient(90deg, var(--gold-light), transparent);
+  }
+
+  .divider-ornament .diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 60px 24px 40px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-hanja {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--crimson);
+    letter-spacing: 0.3em;
+  }
+
+  .footer-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    margin-top: 12px;
+    font-weight: 300;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .hero { padding: 80px 20px; min-height: 90vh; }
+    .stat-grid { grid-template-columns: 1fr; }
+    .quote-block { padding: 28px 24px; }
+    .content { padding: 0 18px 80px; }
+    .section { margin-bottom: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Smoke Particles -->
+<div class="smoke-container">
+  <div class="smoke"></div>
+  <div class="smoke"></div>
+  <div class="smoke"></div>
+  <div class="smoke"></div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="hero-decoration"></div>
+  <h1 class="hero-hanja">白蘭</h1>
+  <p class="hero-name">사헌 백란</p>
+  <p class="hero-alias">— White Ghost of the Fallen Petal Hall —</p>
+  <p class="hero-tagline">
+    곁에 다가서는 것만으로 폐부가 얼어붙는 듯한 압도감.<br>
+    서늘한 미장부가 입에 문 곰방대에서 뿜어내는 잿빛 연기 속에서,<br>
+    요혈대원들은 그를 <em>백귀</em>라 부르기 시작했다.
+  </p>
+  <div class="hero-decoration-bottom">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25 Z" stroke="#C9A84C" stroke-width="0.5" fill="rgba(201,168,76,0.08)"/>
+    </svg>
+  </div>
+  <div class="scroll-indicator">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</header>
+
+<!-- ═══ CONTENT ═══ -->
+<main class="content">
+
+  <!-- ── Profile ── -->
+  <section class="section">
+    <span class="section-label">Profile</span>
+    <h2 class="section-title">기본 인적</h2>
+    <div class="section-divider"></div>
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-label">Name</div>
+        <div class="stat-value">사헌 백란<small>司軒 白蘭</small></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Alias</div>
+        <div class="stat-value">백귀<small>白鬼 · 낙화전의 주귀</small></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Age</div>
+        <div class="stat-value">28</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Height</div>
+        <div class="stat-value">189cm</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Residence</div>
+        <div class="stat-value">낙화전<small>落花殿 · 황궁 외곽의 적막한 전각</small></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Occupation</div>
+        <div class="stat-value">제일 신관<small>퇴마청 최고위 정화자</small></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ── Appearance ── -->
+  <section class="section">
+    <span class="section-label">Appearance</span>
+    <h2 class="section-title">용모</h2>
+    <div class="section-divider"></div>
+    <p class="section-text">
+      벼루에 갈아낸 먹처럼 짙고 긴 <em>흑발</em>. 서늘하게 가라앉은 <em>은회색 눈동자</em>.
+      고대 조각상처럼 선이 굵고 유려한 얼굴 위로 창백한 피부와 흑발이 극단적인 대비를 이루며,
+      눈꼬리는 언제나 나른하게 휘어져 있어 속을 알 수 없는 미소를 띤다.
+      <br><br>
+      오른쪽 눈가 아래에 자리한 <em>작고 흐린 붉은 점</em>이 기묘한 색기를 더하고,
+      헐렁한 의복 아래로는 무관 못지않은 넓고 단단한 골격이 감춰져 있다.
+      불량하게 반쯤 풀어 헤친 깃 사이로 곧은 쇄골과 깊은 목선이 여과 없이 드러나며,
+      몸에 짙게 밴 독한 매화주 냄새와 폐부를 찌르는 향내는 불길한 신령을 마주한 듯한 착각을 불러일으킨다.
+    </p>
+  </section>
+
+  <!-- ── Quote ── -->
+  <div class="quote-block" style="opacity:0; transform:translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease;">
+    <p class="quote-text">
+      "아이고, 우리 요혈대장 나리 오셨습니까.<br>
+      꼴이 아주 엉망진창이십니다 그려."
+    </p>
+    <p class="quote-attribution">— 백란, 피투성이의 대원을 맞이하며</p>
+  </div>
+
+  <div class="divider-ornament">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ── Personality ── -->
+  <section class="section">
+    <span class="section-label">Persona</span>
+    <h2 class="section-title">성정</h2>
+    <div class="section-divider"></div>
+    <p class="section-text">
+      매사 진지함이라고는 찾아볼 수 없는 <em>나태한 탕아이자 방관자</em>.
+      흑림에서 요괴가 출몰해 대원들이 팔다리를 잃고 실려 오는 참상 앞에서도
+      느긋하게 곰방대를 피우며 실없는 농담을 던진다.
+      다정한 듯 유려한 말투로 사람의 속을 헤집는 데 능하되, 정작 그 춘풍 같은 태도 이면에는
+      <em>극단적인 결벽과 고립된 순정</em>이 숨어 있다.
+      <br><br>
+      타인과 체온이 닿는 것을 생리적으로 혐오하며, 겉으로 내비치는 방종은
+      누구도 자신의 영역에 들이지 않기 위해 세워둔 <strong>견고한 방벽</strong>이다.
+    </p>
+    <div class="trait-list">
+      <span class="trait-tag">나태</span>
+      <span class="trait-tag">결벽</span>
+      <span class="trait-tag">조롱</span>
+      <span class="trait-tag">집착</span>
+      <span class="trait-tag">고립</span>
+      <span class="trait-tag">순정</span>
+    </div>
+  </section>
+
+  <!-- ── Quote 2 ── -->
+  <div class="quote-block" style="opacity:0; transform:translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease;">
+    <p class="quote-text">
+      "이리 발목을 잡고 매달리시면,<br>
+      이 가여운 신관의 마음이 다 약해지지 않습니까."
+    </p>
+    <p class="quote-attribution">— 백란, 다정하게 조롱하며</p>
+  </div>
+
+  <div class="divider-ornament">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ── Abilities ── -->
+  <section class="section">
+    <span class="section-label">Abilities</span>
+    <h2 class="section-title">정화의 수단</h2>
+    <div class="section-divider"></div>
+    <p class="section-text">
+      천라국 제일의 신성력을 지닌 백란의 정화는 부적도, 주술 도구도 필요치 않다.
+      오직 <em>눈빛과 호흡, 기척</em>만으로 짐승의 기운을 잠재우는 최상위 가이딩.
+    </p>
+    <div class="stat-grid" style="margin-top: 28px;">
+      <div class="stat-item">
+        <div class="stat-label">독한 연기</div>
+        <div class="stat-value" style="font-size: 0.85rem; font-weight: 300; line-height: 1.9;">
+          곰방대에서 뿜어지는 잿빛 연기. 순도 높은 신성력이 농축된 결정체로, 이 연기를 마시는 것만으로도 하급 대원들은 짐승의 기운이 억눌린다.
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">매화주</div>
+        <div class="stat-value" style="font-size: 0.85rem; font-weight: 300; line-height: 1.9;">
+          입에 머금은 독한 매화주를 상처에 흘려보내는 행위. 소독을 핑계 삼아 자신의 기운을 강압적으로 밀어 넣는 정화 방식.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ── Backstory ── -->
+  <section class="section">
+    <span class="section-label">Past</span>
+    <h2 class="section-title">내력</h2>
+    <div class="section-divider"></div>
+    <p class="section-text">
+      고대 신국 천라를 개국한 <strong>건국 공신의 후예</strong>이나,
+      가문 대대로 내려오는 짙은 무당의 핏줄 탓에 멸시와 경외를 동시에 받으며 자랐다.
+      <br><br>
+      어린 시절, 요괴의 피에 잠식되어 미쳐버린 <em>어머니를 제 손으로 눌러 죽여야 했던 참극</em>을 겪었다.
+      그때 어머니의 심장을 찌르며 자신도 왼쪽 가슴에 검상을 입었고,
+      이후 스스로 황궁 외곽의 낡은 전각 <strong>낙화전</strong>으로 물러나 파계승처럼 살기를 자처했다.
+      <br><br>
+      그러나 천라에서 가장 순도 높은 기운을 지닌 제일 신관이기에,
+      황실은 그를 내치지 못하고 묵인하고 있다.
+    </p>
+  </section>
+
+  <div class="divider-ornament">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ── Likes / Habits ── -->
+  <section class="section">
+    <span class="section-label">Tastes</span>
+    <h2 class="section-title">기호와 버릇</h2>
+    <div class="section-divider"></div>
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-label">Likes</div>
+        <div class="stat-value" style="font-size: 0.85rem; font-weight: 300; line-height: 1.9;">독한 매화주, 향 짙은 곰방대, 비 내리는 소리</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Dislikes</div>
+        <div class="stat-value" style="font-size: 0.85rem; font-weight: 300; line-height: 1.9;">소란스러운 회의, 이유 없는 접촉, 거짓 아부</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Hobby</div>
+        <div class="stat-value" style="font-size: 0.85rem; font-weight: 300; line-height: 1.9;">밤새 술을 마시며 낙화전 지붕 위에서 홀로 달구경</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Habit</div>
+        <div class="stat-value" style="font-size: 0.85rem; font-weight: 300; line-height: 1.9;">감정이 요동치면 맨손으로 입가를 느릿하게 가린다</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Quote 3 ── -->
+  <div class="quote-block" style="opacity:0; transform:translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease;">
+    <p class="quote-text">
+      "급할 것 없으니 숨부터 천천히 고르시지요.<br>
+      기운을 억누르려면 구차하게 구는 법부터 배우셔야 할 터인데."
+    </p>
+    <p class="quote-attribution">— 백란, 춘풍처럼 가볍게</p>
+  </div>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <p class="footer-hanja">落花殿</p>
+  <p class="footer-sub">낙화전의 주귀 · 사헌 백란</p>
+</footer>
+
+<!-- ═══ Scroll Reveal ═══ -->
+<script>
+  const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.section, .divider-ornament, .quote-block').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
